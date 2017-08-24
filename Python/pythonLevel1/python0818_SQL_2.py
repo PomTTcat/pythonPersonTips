@@ -75,7 +75,17 @@ print cursor.fetchall()
 # [^charlist]或者[!charlist]不在字符列中的任何单一字符	#[!ALN]% 不以A,L,N开头的都行。
 
 print '--------IN 操作符---------'  # IN 操作符允许我们在 WHERE 子句中规定多个值
-cursor.execute('SELECT * FROM table0818 WHERE name = %s', ('Jeff',))
+
+
+def getName(x):
+    cursor.execute('SELECT * FROM table0818 WHERE name = %s', (x,))
+    print cursor.fetchall()
+
+getName('Jeff')
+
+ssss = ('SELECT * FROM table0818 WHERE name = %s', ('Jeff',))
+# cursor.execute('SELECT * FROM table0818 WHERE name = %s', ('Jeff',))
+cursor.execute(*ssss)
 print cursor.fetchall()
 
 cursor.execute('SELECT * FROM table0818 WHERE name in (%s,%s)',
@@ -192,7 +202,7 @@ cursor.execute(
     'CREATE VIEW testView AS '
     'SELECT id,name '
     'FROM table0818 '
-    'Where city = %s',('Shanghai',))
+    'Where city = %s', ('Shanghai',))
 print cursor.execute('SELECT * FROM testView')
 print cursor.fetchall
 

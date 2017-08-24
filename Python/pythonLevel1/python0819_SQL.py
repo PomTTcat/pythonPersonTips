@@ -5,8 +5,8 @@ import mysql.connector
 # 注意把password设为你的root口令:
 conn = mysql.connector.connect(
     user='root', password='newpass', database='test', use_unicode=True)
-cursor = conn.cursor()
-
+# cursor = conn.cursor()
+cursor = conn.cursor(buffered=True)
 
 # 先删除表，再创建user表:
 # cursor.execute('DROP TABLE Orders')
@@ -36,6 +36,7 @@ cursor.execute('insert into Orders (name, age, city, salary) values (%s, %s, %s,
 print '--------AVG()---------'
 cursor.execute('SELECT AVG(salary) FROM Orders')
 print cursor.fetchall()
+
 
 cursor.execute('SELECT name FROM Orders '
                'WHERE salary>(SELECT AVG(salary) FROM Orders)')
@@ -113,7 +114,9 @@ print cursor.fetchall()
 
 print '--------Now()---------'	
 cursor.execute('SELECT name, salary, Now() as PerDate FROM Orders')
-print cursor.fetchall()
+print cursor.fetchone()
+# print cursor.fetchall()
+
 
 
 print '--------Now() + FORMAT()---------' # 去掉百分号的值	

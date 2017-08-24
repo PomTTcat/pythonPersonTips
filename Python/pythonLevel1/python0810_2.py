@@ -5,6 +5,23 @@ print '-------@property-------'
 
 class Student(object):
 
+    def get_score(self):
+        return self._score
+
+    def set_score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+
+s = Student()
+s.set_score(60)
+print s.get_score()
+
+
+class Student(object):
+
     @property
     def score(self):
         return self._score
@@ -19,10 +36,14 @@ class Student(object):
 
 s = Student()
 s.score = 60
+# s.score(60)
 print s.score
+
 
 # s.score = 9999
 # @property ,重写setter方法，getter方法。加 @property 描述 getter 和 @score.setter 描述 setter
+# @property装饰器就是负责把一个方法变成属性调用
+# @property只定义getter方法，不定义setter方法。
 
 print '-------只读属性-------'
 
@@ -246,12 +267,132 @@ class Student234(object):
 sN = StudentNew()
 s = Student234('Jeff')
 print s()
-# print sN()
+print sN
 
 
-print callable(sN)	# sN 不能调用 sN() ，而 s() 可以。
-print callable(s)	# 因为该类实现了 __call__ 方法。
-x = [1,2]
-print callable(x)
+print 'test sN', callable(sN)	   # sN 不能调用 sN() ，而 s() 可以。
+print 'test s', callable(s)	         # 因为该类实现了 __call__ 方法。
+x = [1, 2]
+print 'test x', callable(x)
+
+print 'test return', s() if callable(s) else s
+
+print '----------'
+if callable(s):
+    print s(), 'line s()'
+else:
+    print s
+    print 'line s'
 
 
+class JeffClass(object):
+
+    _count = 0
+
+    """docstring for JeffClass"""
+
+    def __init__(self, arg):
+        super(JeffClass, self).__init__()
+        self.arg = arg
+        self._order = JeffClass._count + 1
+        JeffClass._count = JeffClass._count + 1
+
+    @property
+    def orderNumber(self):
+        return self._order
+
+
+j1 = JeffClass(2)
+j2 = JeffClass(3)
+j3 = JeffClass(5)
+j4 = JeffClass(5)
+j5 = JeffClass(7)
+
+print j1.orderNumber
+print j2.orderNumber
+print j3.orderNumber
+print j4.orderNumber
+print j5.orderNumber
+
+print JeffClass._count
+
+
+class CustomField(object):
+    """docstring for CustomField"""
+
+    def __init__(self, **kw):
+        if not 'default' in kw:
+            kw['default'] = ''
+        if not 'ddl' in kw:
+            kw['ddl'] = 'text'
+        super(CustomField, self).__init__(**kw)
+
+print '330---------------------'
+
+
+class Fjs(object):
+
+    def __init__(self, name):
+        self.name = name
+
+    def hello(self):
+        print "said by : ", self.name
+
+    # 对于对象的所有特性的访问，都将会调用这个方法来处理。。。可以理解为在__getattr__之前
+    def __getattribute__(self, item):
+        print "访问了特性：" + item
+        return object.__getattribute__(self, item)
+
+    @classmethod
+    def pCls(cls):
+        print 'class method test'
+        print cls
+
+
+fjs = Fjs("fjs")
+print '------347'
+print fjs.name
+print '------349'
+Fjs.pCls()
+print 'class method test over'
+fjs.hello()
+
+print 'newClass---------------------'
+class newClass(object):
+    """docstring for newClass"""
+
+    def __init__(self):
+        super(newClass, self).__init__()
+
+
+class oldClass():
+    """docstring for oldClass"""
+
+    def __init__(self):
+        pass
+
+
+class oldToNew():
+    """docstring for oldToNew"""
+    __metaclass__ = type
+
+    def __init__(self):
+        super(oldToNew, self).__init__()
+
+
+# 旧式类
+ooC = oldClass()
+print ooC.__class__     # __main__.oldClass
+print type(ooC)         # <type 'instance'>
+
+# 旧式 to 新式
+onC = oldToNew()
+print onC.__class__
+print type(onC)
+
+# 新式类   统一了 type 和 __class__
+nnC = newClass()
+print nnC.__class__
+print type(nnC)
+# <class '__main__.newClass'>
+# <class '__main__.newClass'>
