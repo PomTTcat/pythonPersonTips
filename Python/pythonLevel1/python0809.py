@@ -166,13 +166,14 @@ print '-------map()和reduce()-------'
 def JIEsquare(x):
     return x * x
 
-print map(JIEsquare, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+# 用这个函数对后面的所以对象使用一遍
+print 'map:',map(JIEsquare, [1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 
 def JIEsum(x, y):
     return x + y
 
-print reduce(JIEsum, [1, 3, 5, 7, 9])
+print 'reduce:',reduce(JIEsum, [1, 3, 5, 7, 9])
 
 # ------------------------------------
 

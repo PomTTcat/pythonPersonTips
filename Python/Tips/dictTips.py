@@ -22,3 +22,19 @@ params['buffered1'] = True
 params['buffered2'] = True
 params['buffered2'] = True
 
+
+class JeffMan(object):
+    """docstring for JeffMan"""
+
+    def __init__(self, arg):
+        super(JeffMan, self).__init__()
+        self.arg = arg
+
+    def head(self, name):
+        self._name = name
+
+    def head(self):
+        return self._name
+
+je = JeffMan('xixi')
+je.head = 'hahha'

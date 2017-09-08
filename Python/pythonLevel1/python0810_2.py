@@ -44,6 +44,8 @@ print s.score
 # @property ,重写setter方法，getter方法。加 @property 描述 getter 和 @score.setter 描述 setter
 # @property装饰器就是负责把一个方法变成属性调用
 # @property只定义getter方法，不定义setter方法。
+# no        @property   sss.age()
+# have      @property   sss.age 把方法变成了属性调用。
 
 print '-------只读属性-------'
 
@@ -65,6 +67,11 @@ class Student(object):
 print '-------多重继承-------'
 print '-------多重继承 相当于分类-------'
 
+
+sss = Student()
+sss.birth = 2001
+print sss.birth
+print sss.age
 
 class Animal(object):
     pass
